@@ -17,10 +17,16 @@
             </div>
 
             <div class="form-group">
-                <label for="password">password</label>
-                <input type="password" id="password" class="form-control" formControlName="password">
+                <div class="md-form form-sm password-div"> 
+                    <label for="password">password</label>
+                    <input type="{{showPassword ? 'text' : 'password' }}" id="password" class="form-control form-control-sm" formControlName="password">
+                    
+                    <a (click)="togglePassword()" class="eye-b">{{showPassword ? 'hide' : 'show'}}
+                        <i class="{{showPassword ? 'fas fa-eye-slash' : 'fas fa-eye' }}"></i>
+                    </a>
+                
+                </div>
             </div>
-
             <div>
                 <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid"> {{isLoginMode ? 'Login' : 'Sign Up'}}</button> |
                 <button class="btn btn-primary" (click)="onSwitchMode()" type="button"> Switch to {{isLoginMode ? 'Sign Up' : 'Login'}}</button>

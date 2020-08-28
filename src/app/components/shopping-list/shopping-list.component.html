@@ -7,9 +7,14 @@
             <a 
                 class="list-group-item" 
                 style="cursor: pointer" 
-                *ngFor="let ingredient of ingredients; let i =index"
+                *ngFor="let ingredient of (ingredients | async).ingredients; let i =index"
                 (click) = "onEditItem(i)">
                     {{ingredient.name}}  ({{ingredient.amount}})
             </a>
         </ul>
 </div>
+<!--
+    *(Ingredients | async)
+    angular will subscribe to ingredient for us (and manage the ubscription) and in the end we can
+    access to the ingredients array once that observable has been resolved.
+-->

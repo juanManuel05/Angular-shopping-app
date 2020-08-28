@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthService, AuthResponseData } from './auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-auth',
@@ -15,6 +16,7 @@ export class AuthComponent implements OnInit {
   isLoading = false;
   error :string = null;
   authForm: FormGroup;
+  showPassword: boolean = false;
   
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -69,6 +71,10 @@ export class AuthComponent implements OnInit {
 
   onHandleError() {
     this.error = null;
+  }
+
+  public togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 
 }

@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AuthInterceptorService } from './components/auth/auth-interceptor.service';
 import { SharedModule } from './shared/shared.module';
+import { StoreModule } from '@ngrx/store';
+import { ShoppingListReducer } from './components/shopping-list/store/shopping-list.reducer';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forRoot({shoppingList: ShoppingListReducer})
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

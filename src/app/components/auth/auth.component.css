@@ -1,3 +1,14 @@
 input.ng-invalid.ng-touched {
     border: 1px solid red;
   }
+
+  .password-div{
+    position: relative;
+  
+  }
+  .eye-b {
+    color: #ccc;
+    position: absolute;
+    top: 33px;
+    right: 10px;
+  }
