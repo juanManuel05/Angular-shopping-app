@@ -5,7 +5,7 @@ import { CustomValidators } from 'src/app/shared/FormValidators/custom-validator
 import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as ShoppingListAction from  '../store/shopping-list.actions';
-import * as fromShoppingList from '../store/shopping-list.reducer';
+import * as fromGeneralStore from '../../store/app.reducer';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -23,7 +23,7 @@ export class ShoppingEditComponent implements OnInit {
   editMode = false;
   editedItem : Ingredient;
 
-  constructor(private store: Store<fromShoppingList.AppState>) { }
+  constructor(private store: Store<fromGeneralStore.AppState>) { }
 
   ngOnInit() {
 

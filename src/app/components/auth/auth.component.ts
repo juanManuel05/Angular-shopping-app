@@ -3,8 +3,9 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthService, AuthResponseData } from './auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { ThrowStmt } from '@angular/compiler';
-
+import * as fromGeneralStore from '../../../app/components/store/app.reducer';
+import { Store } from '@ngrx/store';
+import * as AuthActions from './store/auth.actions';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -18,10 +19,14 @@ export class AuthComponent implements OnInit {
   authForm: FormGroup;
   showPassword: boolean = false;
   
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private store: Store<fromGeneralStore.AppState>) { }
 
   ngOnInit() {
     this.initForm();
+    this.store.select('auth').subscribe(authState => {
+      this.isLoading = authState.loading;
+      this.error = authState.authError;
+    })
   }
 
   onSwitchMode(){
@@ -51,20 +56,26 @@ export class AuthComponent implements OnInit {
     this.isLoading = true;
 
     if(this.isLoginMode){
-      authObs = this.authService.login(email,password);
+      //authObs = this.authService.login(email,password);
+      this.store.dispatch(new AuthActions.LoginStart({
+        email,
+        password
+      })
+    );
     }else{
         authObs = this.authService.signUp(email,password);       
     }    
 
-    authObs.subscribe((response) => {
-      console.log(response);
-      this.isLoading = false;
-      this.router.navigate(['/recipes']);
-    },(errorResponse) => {
-        console.log(errorResponse);
-        this.error = `An error ocurred: ${errorResponse.error.error.message}`;
-        this.isLoading = false;
-    });
+    // authObs.subscribe((response) => {
+    //   console.log(response);
+    //   this.isLoading = false;
+    //   this.router.navigate(['/recipes']);
+    // },(errorResponse) => {
+    //     console.log(errorResponse);
+    //     this.error = `An error ocurred: ${errorResponse.error.error.message}`;
+    //     this.isLoading = false;
+    // });
+
     this.authForm.reset();
     this.error = null;
   }

@@ -8,7 +8,9 @@ import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AuthInterceptorService } from './components/auth/auth-interceptor.service';
 import { SharedModule } from './shared/shared.module';
 import { StoreModule } from '@ngrx/store';
-import { ShoppingListReducer } from './components/shopping-list/store/shopping-list.reducer';
+import * as fromGeneralStore from '../app/components/store/app.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './components/auth/store/auth.effects';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { ShoppingListReducer } from './components/shopping-list/store/shopping-l
     FormsModule,
     HttpClientModule,
     SharedModule,
-    StoreModule.forRoot({shoppingList: ShoppingListReducer})
+    StoreModule.forRoot(fromGeneralStore.appReducer),
+    EffectsModule.forRoot([AuthEffects])
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

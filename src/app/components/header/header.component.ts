@@ -2,7 +2,9 @@ import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/cor
 import { DataStorageService } from 'src/app/shared/data-storage.service';
 import { AuthService } from '../auth/auth.service';
 import { Subject } from 'rxjs';
-import { User } from '../auth/user.model';
+import { Store } from '@ngrx/store';
+import * as fromGeneralStore from '../../../app/components/store/app.reducer';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -13,10 +15,14 @@ export class HeaderComponent implements OnInit,OnDestroy  {
 
   private componentDestroyed = new Subject();
   isAuthenticated = false;
-  constructor(private storageServiceHttp: DataStorageService, private authService: AuthService) {}
+  constructor(private storageServiceHttp: DataStorageService, private authService: AuthService,private store: Store<fromGeneralStore.AppState>) {}
 
   ngOnInit(): void {
-    this.authService.user.subscribe(user => {
+    this.store.select('auth')
+    .pipe(
+      map((authState) => authState.user)
+    )
+    .subscribe(user => {
       this.isAuthenticated = !user ? false : true; //!!user
     });
   }

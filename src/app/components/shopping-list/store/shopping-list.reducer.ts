@@ -7,10 +7,6 @@ export interface State {
     editedIngredientIndex: number
 }
 
-export interface AppState {
-    shoppingList: State
-}
-
 const initialState: State = {
     ingredients: [
         new Ingredient('Apples',5),
@@ -33,7 +29,7 @@ export function ShoppingListReducer(state: State = initialState, action: Shoppin
             return {
                 ...state,
                 ingredients: [...state.ingredients,...action.payload]
-                //If i had done '[...state.ingredients,...action.payload]' i would of have added an 
+                //If i had done '[...state.ingredients,action.payload]' i would of have added an 
                 //array to an array and hence we have a nested array, which is not what im after.
                 //Instead, by doing '...action.payload' im pulling the elem out of the payload and add them into the 'ingredients array'
             }
