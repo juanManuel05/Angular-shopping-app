@@ -34,6 +34,7 @@ switch(action.type) {
             user:null
         }
     case AuthActions.LOGIN_START:
+    case AuthActions.SIGNUP_START:
         return {
             ...state,
             authError: null,
@@ -45,6 +46,12 @@ switch(action.type) {
             user: null,
             authError: action.payload,
             loading: false
+        }
+    
+    case AuthActions.CLEAR_ERROR:
+        return {
+            ...state,
+            error: null
         }
         
     default:
